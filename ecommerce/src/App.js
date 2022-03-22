@@ -5,14 +5,37 @@ import './components/pages/homepage/Homepage.scss';
 import Shop from './components/pages/shop/Shop';
 import Header from './components/pages/Header/Header';
 import Signinsignout from './components/pages/signinsignout/signinsignout';
+import { auth } from './firebase/firebase.utils';
 // import { Routes ,Route } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import React, {Component} from 'react';
 
 
-function App() {
+class App extends React.Component  {
+  constructor(){
+    super()
+    this.state = {
+      currentUser : null
+    }
+  }
+
+  unsubscribefromauth = null
+
+  componentDidMount(){
+    this.unsubscribefromauth = auth.onAuthStateChanged( user =>{
+      this.setState({currentUser: user})
+    } )
+  }
+  componentWillUnmount(){
+    this.unsubscribefromauth()
+  }
+
+
+
+  render(){
   return (
     <div className="App">
-    <Header/>
+    <Header currentuser={this.state.currentUser} />
     <Router>
     <Routes>
     <Route path="/" element={<Homepage/ >} />
@@ -21,7 +44,8 @@ function App() {
     </Routes>
     </Router>
     </div>
-  );
+  )
+}
 }
 
 export default App;
