@@ -9,7 +9,7 @@ import { auth } from './firebase/firebase.utils';
 // import { Routes ,Route } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import React, {Component} from 'react';
-
+import { createUserProfileDocument } from './firebase/firebase.utils';
 
 class App extends React.Component  {
   constructor(){
@@ -22,9 +22,25 @@ class App extends React.Component  {
   unsubscribefromauth = null
 
   componentDidMount(){
-    this.unsubscribefromauth = auth.onAuthStateChanged( user =>{
-      this.setState({currentUser: user})
+    this.unsubscribefromauth = auth.onAuthStateChanged( async userAuth =>{
+      if(userAuth){
+        const userref = await createUserProfileDocument(userAuth)
+
+        userref.onSnapshot( snapShot =>{
+          this.setState({
+            currentUser:{
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          } )
+        } )
+      }
+      else{
+        this.setState ( { currentUser: userAuth})
+      }
+      
     } )
+    
   }
   componentWillUnmount(){
     this.unsubscribefromauth()
