@@ -1,7 +1,7 @@
 import React from 'react'
 import './cartitem.scss'
 
- const Cartitem = ( {item:  {imageUrl, price, name, quantity }} ) =>   (
+ const CartItem = ( {item:  {imageUrl, price, name, quantity }} ) =>   (
    <div className='cart-item'>
    {console.log(imageUrl)}
     <img src={imageUrl} alt='item-image' />
@@ -14,4 +14,4 @@ import './cartitem.scss'
     </div>
   )
  
-export default Cartitem
+export default CartItem
