@@ -6,10 +6,14 @@ import Shop from './components/pages/shop/Shop';
 import Header from './components/pages/Header/Header';
 import Signinsignout from './components/pages/signinsignout/signinsignout';
 import { auth } from './firebase/firebase.utils';
-// import { Routes ,Route } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Routes ,Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import React, {Component} from 'react';
 import { createUserProfileDocument } from './firebase/firebase.utils';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from './redux/user/user_selectors';
+import { setCurrentUser } from './redux/user/user.actions';
+import Checkout from './components/pages/checkout/checkout';
 
 class App extends React.Component  {
   constructor(){
@@ -52,16 +56,24 @@ class App extends React.Component  {
   return (
     <div className="App">
     <Header currentuser={this.state.currentUser} />
-    <Router>
     <Routes>
-    <Route path="/" element={<Homepage/ >} />
-    <Route path="/shop" element={<Shop/ >} />
-    <Route path="/signin" element={<Signinsignout/ >} />
+    <Route exact path="/" element={<Homepage/ >} />
+    <Route exact path="/shop" element={<Shop/ >} />
+    <Route exact path="/signin" element={<Signinsignout/ >} />
+    <Route exact path="/checkout" element={<Checkout/ >} />
     </Routes>
-    </Router>
     </div>
   )
 }
 }
+
+ const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+ })  
+
+  const mapDispatchToProps =  dispatch  => ({
+    setCurrentUser: user => dispatch(setCurrentUser(user))
+ })
+
 
 export default App;
