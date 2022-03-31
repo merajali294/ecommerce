@@ -6,6 +6,7 @@ import { selectCartItems } from '../../../redux/cart/cartSelectors'
 import { selectCartTotal } from '../../../redux/cart/cartSelectors'
 import CartItem from '../../cartitem/cartitem'
 import CheckoutItem from '../../checkoutItem/checkoutItem'
+import StripeCheckoutButton from '../../stripe_button/stripe_button'
 
 const Checkout = ({CartItems, total}) => 
     (
@@ -22,7 +23,6 @@ const Checkout = ({CartItems, total}) =>
     </div>
     <div className='header-block'>
     <span>Price</span>
-    <span>{total}</span>
     </div>
     <div className='header-block'>
     <span>Remove</span>
@@ -36,6 +36,7 @@ const Checkout = ({CartItems, total}) =>
     <div className='header-block'>
     <span>Total ${total} </span>
     </div>
+    <StripeCheckoutButton price={total}/>
     </div>
     )
  

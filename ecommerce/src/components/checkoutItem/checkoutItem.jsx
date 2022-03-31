@@ -3,6 +3,7 @@ import React from 'react'
 import CartItem from '../cartitem/cartitem'
 import { connect } from 'react-redux'
 import { clearItemfromCart } from '../../redux/cart/cart.actions'
+import StripeCheckoutButton from '../stripe_button/stripe_button'
 
 const CheckoutItem = ({ cartItem, clearItem }) => {
     const {name, imageUrl, price, quantity} = cartItem
@@ -15,6 +16,7 @@ const CheckoutItem = ({ cartItem, clearItem }) => {
     <span className='quantity'>{quantity}</span>
     <span className='price'>{price}</span>
     <div className='remove-button' onClick={ () => clearItem(cartItem)}> X </div>
+
     </div>
   )
 }
